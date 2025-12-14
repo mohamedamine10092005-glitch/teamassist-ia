@@ -1,0 +1,33 @@
+import streamlit as st
+
+st.set_page_config(page_title="TeamAssist IA", layout="centered")
+
+st.title("🤖 TeamAssist IA")
+st.subheader("Assistant intelligent de bien-être et d’aide à la décision")
+
+st.markdown("---")
+
+humeur = st.slider("Humeur du collaborateur (1 = très mauvaise, 5 = excellente)", 1, 5, 3)
+charge = st.selectbox("Charge de travail", ["Faible", "Moyenne", "Élevée"])
+commentaire = st.text_area("Commentaire libre (optionnel)")
+
+st.markdown("---")
+
+def analyse_ia(humeur, charge, commentaire):
+    if humeur <= 2 and charge == "Élevée":
+        return "⚠️ Risque de stress élevé détecté.", \
+               "Il est recommandé d’alléger temporairement la charge et d’engager un échange humain."
+    elif humeur <= 3 and charge == "Moyenne":
+        return "ℹ️ Fatigue modérée détectée.", \
+               "Une discussion avec le manager peut aider à ajuster les priorités."
+    else:
+        return "✅ Situation globalement satisfaisante.", \
+               "Maintenir l’organisation actuelle et encourager la communication."
+
+if st.button("Analyser avec l’IA"):
+    etat, recommandation = analyse_ia(humeur, charge, commentaire)
+    st.markdown("### Résultat de l’analyse IA")
+    st.write(etat)
+    st.markdown("**Recommandation IA :**")
+    st.write(recommandation)
+    st.markdown("⚖️ *Décision finale laissée au manager humain.*")
